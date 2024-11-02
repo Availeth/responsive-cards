@@ -1,13 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="users-container"></div>
+<style>
+    body { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.users-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 50%;
+    align-items: start;
+}
+.user-container {
+    background-color: #f9f9f9;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1),
+    0 5px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    position: relative;
+    height: 220px;
+    max-height: max-content;
+    line-height: 20px;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    overflow: hidden;
+  }
+
+  .user-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        -250deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.user-container:hover::before {
+    left: 100%;
+}
+
+  .user-container:nth-child(odd):hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.user-container:nth-child(even):hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+  .user-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  .user-details {
+    margin-top: 10px;
+  }
+  .user-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .user-email, .user-age, .user-info {
+    font-size: 14px;
+    margin: 5px 0;
+    font-family:Arial, Helvetica, sans-serif;
+  }
+  .btn-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-decoration: none;
+    color: #a4a3a3;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: lighter;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
+  }
+
+  @media screen and (max-width: 1200px) {
+    .users-container {
+        width: 95%;
+        gap: 15px;
+    }
+    
+}
+
+@media screen and (max-width: 900px) {
+    .users-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    .users-container {
+        grid-template-columns: 1fr;
+        width: 100%;
+        padding: 10px;
+        margin-left: 20vw;
+        margin-top: 10vw;
+    }
+
+    .user-container {
+        max-width: 280px; 
+        height: auto; 
+        min-height: 220px;
+    }
+}
+</style>
+<div class="users-container"></div>
 
 <template id="user-template">
   <div class="user-container">
@@ -23,7 +139,82 @@
   </div>
 </template>
 
-<script src="script.js"></script>
+<script>
+         const usersData = [
+    {
+      name: "John Doe",
+      email: "ㅤ",
+      age: "28 years old",
+      info: "A passionate wildlife enthusiast and photographer, often found exploring nature.",
+      imgSrc: "images/jane-doe.png"
+    },
+    {
+      name: "Jane Smith",
+      email: "janesmith@example.com",
+      age: "28 years old",
+      info: "An avid reader and aspiring novelist, Jane loves spending her weekends at local cafes.",
+      imgSrc: "images/jane-smith.png"
+    },
+    {
+      name: "",
+      email: "mikebrown@example.com",
+      age: "45 years old",
+      info: "Tech-savvy and innovative, Sarah is known for her cutting-edge software solutions.",
+      imgSrc: "mike-brown.png"
+    },
+    {
+      name: "Sarah Johnson",
+      email: "sarahjohnson@example.com",
+      age: "30 years old",
+      info: "A fitness enthusiast, Alex enjoys hiking and participating in marathons around the country.",
+      imgSrc: "/images/sarah-johnson.png"
+    },
+    {
+      name: "Alex Martinez",
+      email: "ㅤ",
+      age: "27 years old",
+      info: "",
+      imgSrc: "/images/alex-martinez.png"
+    }
+  ];
+
+  function displayUsers() {
+    const container = document.querySelector('.users-container');
+    const template = document.querySelector('#user-template');
+
+    usersData.forEach(users => {
+      const userClone = template.content.cloneNode(true);
+      userClone.querySelector('.user-image').src = users.imgSrc;
+      userClone.querySelector('.user-name').textContent = users.name;
+      userClone.querySelector('.user-email').textContent = users.email;
+      userClone.querySelector('.user-age').textContent = users.age;
+      userClone.querySelector('.user-info').textContent = users.info;
+      container.appendChild(userClone);
+    });
+  }
+
+  
+
+  displayUsers();
+
+  function closeBtn() {
+    const closeButtons = document.querySelectorAll('.btn-close');
+  
+    closeButtons.forEach(button => {
+        button.textContent = '×'; 
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const userContainer = button.closest('.user-container');
+        if (userContainer) {
+          userContainer.remove();
+        }
+      });
+    });
+  }
+
+  closeBtn();
+
+</script>
 
 </body>
 </html>
