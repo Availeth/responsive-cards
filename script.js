@@ -14,7 +14,7 @@
       imgSrc: "images/jane-smith.png"
     },
     {
-      name: "ㅤ",
+      name: "",
       email: "mikebrown@example.com",
       age: "45 years old",
       info: "Tech-savvy and innovative, Sarah is known for her cutting-edge software solutions.",
@@ -29,7 +29,7 @@
     },
     {
       name: "Alex Martinez",
-      email: "",
+      email: "ㅤ",
       age: "27 years old",
       info: "",
       imgSrc: "/images/alex-martinez.png"
